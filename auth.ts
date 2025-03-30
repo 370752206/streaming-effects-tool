@@ -2,12 +2,7 @@ import NextAuth from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import prisma from "@/lib/prisma";
 
-export const {
-  handlers: { GET, POST },
-  auth,
-  signIn,
-  signOut,
-} = NextAuth({
+const authHandler = NextAuth({
   adapter: PrismaAdapter(prisma),
   providers: [
     {
@@ -38,3 +33,9 @@ export const {
     signIn: "/auth/signin",
   },
 });
+
+export const GET = authHandler.handlers.GET;
+export const POST = authHandler.handlers.POST;
+export const auth = authHandler.auth;
+export const signIn = authHandler.signIn;
+export const signOut = authHandler.signOut;
