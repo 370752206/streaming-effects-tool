@@ -3,7 +3,7 @@ import crypto from "crypto-browserify";
 import stream from "stream-browserify";
 import buffer from "buffer";
 import path from "path-browserify";
-import os from "os-browserify/browser";
+import os from "os-browserify/browser.js";
 
 let userConfig = undefined;
 try {
