@@ -2,7 +2,7 @@ import NextAuth from "next-auth"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import prisma from "@/lib/prisma"
 
-export const authOptions = {
+const handler = NextAuth({
   adapter: PrismaAdapter(prisma),
   providers: [
     {
@@ -32,7 +32,6 @@ export const authOptions = {
   pages: {
     signIn: "/auth/signin"
   }
-}
+})
 
-const handler = NextAuth(authOptions)
-export default handler
+export { handler as GET, handler as POST }

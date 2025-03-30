@@ -1,8 +1,8 @@
+import { auth } from "@/auth";
 import { NextResponse } from "next/server";
-import { authOptions } from "@/auth";
 import prisma from "@/lib/prisma";
 
-export const GET = authOptions.handlers.GET(async (req) => {
+export const GET = auth(async (req) => {
   if (!req.auth) {
     return NextResponse.json({ error: "未授权" }, { status: 401 });
   }
