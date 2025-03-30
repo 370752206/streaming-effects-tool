@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    // 编译选项配置
+    "lib": ["dom", "dom.iterable", "esnext"], // 指定要包含在编译中的库文件列表
+    "allowJs": true, // 允许编译 JavaScript 文件
+    "target": "ES6", // 指定 JavaScript 的版本目标
+    "skipLibCheck": true, // 跳过库文件的类型检查
+    "strict": true, // 启用所有严格类型检查选项
+    "noEmit": true, // 不生成输出文件
+    "esModuleInterop": true, // 启用对 CommonJS 模块的导入导出兼容性
+    "module": "esnext", // 指定模块代码生成
+    "moduleResolution": "bundler", // 指定模块解析策略
+    "resolveJsonModule": true, // 允许导入 JSON 文件
+    "isolatedModules": true, // 将每个文件作为单独的模块
+    "jsx": "preserve", // 在输出文件中保留 JSX 语法
+    "incremental": true, // 启用增量编译
+    "plugins": [
+      {
+        "name": "next" // 使用 next 插件
+      }
+    ],
+    "paths": {
+      "@/*": ["./*"] // 路径别名配置，@ 指向当前目录下的所有文件
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"], // 指定包含在编译中的文件
+  "exclude": ["node_modules"] // 指定排除在编译之外的文件夹
+}
