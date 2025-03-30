@@ -34,6 +34,3 @@ export default function RootLayout({
     </html>
   )
 }
-
-// 导入全局样式文件
-import './globals.css'
