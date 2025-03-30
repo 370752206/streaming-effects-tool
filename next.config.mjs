@@ -1,6 +1,8 @@
-let userConfig = undefined
+import webpack from "webpack";
+
+let userConfig = undefined;
 try {
-  userConfig = await import('./v0-user-next.config')
+  userConfig = await import("./v0-user-next.config");
 } catch (e) {
   // ignore error
 }
@@ -21,28 +23,55 @@ const nextConfig = {
     parallelServerBuildTraces: true,
     parallelServerCompiles: true,
   },
-}
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        crypto: require.resolve("crypto-browserify"),
+        stream: require.resolve("stream-browserify"),
+        buffer: require.resolve("buffer/"),
+        path: require.resolve("path-browserify"),
+        os: require.resolve("os-browserify/browser"),
+        fs: false,
+        http: false,
+        https: false,
+        zlib: false,
+        net: false,
+        tls: false,
+        child_process: false,
+      };
 
-mergeConfig(nextConfig, userConfig)
+      config.plugins.push(
+        new webpack.ProvidePlugin({
+          process: "process/browser",
+          Buffer: ["buffer", "Buffer"],
+        })
+      );
+    }
+    return config;
+  },
+};
+
+mergeConfig(nextConfig, userConfig);
 
 function mergeConfig(nextConfig, userConfig) {
   if (!userConfig) {
-    return
+    return;
   }
 
   for (const key in userConfig) {
     if (
-      typeof nextConfig[key] === 'object' &&
+      typeof nextConfig[key] === "object" &&
       !Array.isArray(nextConfig[key])
     ) {
       nextConfig[key] = {
         ...nextConfig[key],
         ...userConfig[key],
-      }
+      };
     } else {
-      nextConfig[key] = userConfig[key]
+      nextConfig[key] = userConfig[key];
     }
   }
 }
 
-export default nextConfig
+export default nextConfig;
