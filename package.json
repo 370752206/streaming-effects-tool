@@ -68,4 +68,6 @@
     "tailwindcss": "^3.4.17",
     "typescript": "^5"
   }
+}"engines": {
+  "node": "18.x"
 }

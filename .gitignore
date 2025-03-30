@@ -25,3 +25,4 @@ yarn-error.log*
 # 忽略 TypeScript 生成的文件
 *.tsbuildinfo
 next-env.d.ts
+.vercel
