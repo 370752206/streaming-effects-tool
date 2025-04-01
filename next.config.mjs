@@ -18,6 +18,8 @@ const nextConfig = {
       fs: false,
       http: false,
       https: false,
+      querystring: require.resolve("querystring-es3"),
+      os: require.resolve("os-browserify/browser"),
     };
 
     return config;
