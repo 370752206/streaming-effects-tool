@@ -1,37 +1,15 @@
-import NextAuth from "next-auth"
-import { PrismaAdapter } from "@auth/prisma-adapter"
-import prisma from "@/lib/prisma"
+// auth.ts
+import NextAuth from "next-auth";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import { PrismaClient } from "@prisma/client";
 
-const handler = NextAuth({
+const prisma = new PrismaClient();
+
+export const authOptions = {
   adapter: PrismaAdapter(prisma),
-  providers: [
-    {
-      id: "credentials",
-      name: "Credentials",
-      type: "credentials",
-      credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" }
-      },
-      async authorize(credentials) {
-        const user = await prisma.user.findUnique({
-          where: { email: credentials.email as string }
-        })
+  providers: [], // 添加您的登录提供商（如 GitHub、Google 等）
+  secret: process.env.AUTH_SECRET,
+};
 
-        if (user && user.password === credentials.password) {
-          return user
-        }
-        return null
-      }
-    }
-  ],
-  session: {
-    strategy: "jwt"
-  },
-  secret: process.env.NEXTAUTH_SECRET,
-  pages: {
-    signIn: "/auth/signin"
-  }
-})
-
-export { handler as GET, handler as POST }
+const handler = NextAuth(authOptions);
+export { handler as GET, handler as POST };
